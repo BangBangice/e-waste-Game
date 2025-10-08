@@ -48,7 +48,7 @@ export default function ThemeToggle() {
   ] as const;
 
   return (
-    <div className="flex items-center space-x-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+    <div className="flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-lg p-1 border border-white/30">
       {themes.map(({ id, label, icon: Icon }) => (
         <motion.button
           key={id}
@@ -57,8 +57,8 @@ export default function ThemeToggle() {
           onClick={() => setTheme(id as Theme)}
           className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
             theme === id
-              ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
-              : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+              ? "bg-white text-purple-600 shadow-lg"
+              : "text-white hover:text-yellow-200 hover:bg-white/20"
           }`}
           title={`Switch to ${label} theme`}
         >

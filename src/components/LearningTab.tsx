@@ -116,8 +116,8 @@ export default function LearningTab() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Learning Center</h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <h2 className="text-2xl font-bold text-indigo-800 dark:text-indigo-200 mb-2">Learning Center</h2>
+        <p className="text-indigo-600 dark:text-indigo-300">
           Learn about e-waste recycling in Melbourne
         </p>
       </div>

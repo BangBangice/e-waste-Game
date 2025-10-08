@@ -37,14 +37,14 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+      <header className="bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-700 dark:to-pink-700 shadow-lg border-b border-purple-300 dark:border-purple-600">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex-1 text-center">
-              <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+              <h1 className="text-2xl font-bold text-white">
                 🌱 E-Waste Recycling Game
               </h1>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              <p className="text-sm text-purple-100 mt-1">
                 Learn about e-waste recycling in Melbourne
               </p>
             </div>
@@ -56,7 +56,7 @@ export default function Home() {
       </header>
 
       {/* Navigation Tabs */}
-      <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
+      <nav className="bg-gradient-to-r from-blue-500 to-cyan-500 dark:from-blue-700 dark:to-cyan-700 border-b border-blue-300 dark:border-blue-600 sticky top-0 z-10 shadow-lg">
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex space-x-1">
             {tabs.map((tab) => {
@@ -69,8 +69,8 @@ export default function Home() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-t-lg transition-all duration-200 ${
                     isActive
-                      ? "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 border-b-2 border-green-500"
-                      : "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                      ? "bg-white text-blue-600 border-b-4 border-yellow-400 shadow-lg transform -translate-y-1"
+                      : "text-white hover:text-yellow-200 hover:bg-blue-400 dark:hover:bg-blue-600"
                   }`}
                 >
                   <Icon size={20} />

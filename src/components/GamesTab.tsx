@@ -277,8 +277,8 @@ export default function GamesTab() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Recycling Games</h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <h2 className="text-2xl font-bold text-orange-800 dark:text-orange-200 mb-2">Recycling Games</h2>
+        <p className="text-orange-600 dark:text-orange-300">
           Choose a game to test your e-waste recycling knowledge
         </p>
       </div>

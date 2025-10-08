@@ -189,8 +189,8 @@ export default function ScanTab() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">QR Code Scanner</h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <h2 className="text-2xl font-bold text-purple-800 dark:text-purple-200 mb-2">QR Code Scanner</h2>
+        <p className="text-purple-600 dark:text-purple-300">
           Scan QR codes on e-waste items to learn about proper disposal
         </p>
       </div>
@@ -201,9 +201,9 @@ export default function ScanTab() {
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className={`bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border-2 border-dashed transition-colors ${
+            className={`bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-800 dark:to-emerald-800 rounded-lg shadow-lg p-6 border-2 border-dashed transition-all duration-300 ${
               availableDevices.length > 0 
-                ? 'border-gray-300 dark:border-gray-600 hover:border-green-400' 
+                ? 'border-green-300 dark:border-green-600 hover:border-green-500 hover:shadow-xl' 
                 : 'border-red-300 dark:border-red-600'
             }`}
           >
