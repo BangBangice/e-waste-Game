@@ -26,6 +26,11 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* Dark mode styles */
+.dark {
+  color-scheme: dark;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

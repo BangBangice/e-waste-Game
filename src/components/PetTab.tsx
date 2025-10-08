@@ -103,15 +103,15 @@ export default function PetTab() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">My Virtual Pet</h2>
-        <p className="text-gray-600">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">My Virtual Pet</h2>
+        <p className="text-gray-600 dark:text-gray-400">
           Take care of your digital companion by keeping it happy and healthy
         </p>
       </div>
 
       {/* Pet Stats */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold mb-4">Pet Status</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h3 className="text-lg font-semibold mb-4 dark:text-gray-100">Pet Status</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
             <Heart className="mx-auto mb-2 text-red-500" size={24} />
@@ -158,8 +158,8 @@ export default function PetTab() {
       </div>
 
       {/* Pet Area */}
-      <div className="bg-gradient-to-br from-blue-100 to-green-100 rounded-lg shadow-md p-6 relative overflow-hidden">
-        <h3 className="text-lg font-semibold mb-4">Pet Playground</h3>
+      <div className="bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900 dark:to-green-900 rounded-lg shadow-md p-6 relative overflow-hidden">
+        <h3 className="text-lg font-semibold mb-4 dark:text-gray-100">Pet Playground</h3>
         
         {/* Pet Character */}
         <motion.div

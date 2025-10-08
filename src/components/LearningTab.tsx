@@ -116,15 +116,15 @@ export default function LearningTab() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Learning Center</h2>
-        <p className="text-gray-600">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Learning Center</h2>
+        <p className="text-gray-600 dark:text-gray-400">
           Learn about e-waste recycling in Melbourne
         </p>
       </div>
 
       {/* Category Filter */}
-      <div className="bg-white rounded-lg shadow-md p-4">
-        <h3 className="text-lg font-semibold mb-3">Browse by Category</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+        <h3 className="text-lg font-semibold mb-3 dark:text-gray-100">Browse by Category</h3>
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
             <span
@@ -144,12 +144,12 @@ export default function LearningTab() {
             key={content.id}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:border-green-300 transition-all"
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-green-300 transition-all"
           >
             <div className="p-6">
               <div className="text-4xl mb-4 text-center">{content.image}</div>
-              <h3 className="text-lg font-semibold mb-2">{content.title}</h3>
-              <p className="text-gray-600 text-sm mb-4">{content.description}</p>
+              <h3 className="text-lg font-semibold mb-2 dark:text-gray-100">{content.title}</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{content.description}</p>
               
               <div className="space-y-3">
                 <button
