@@ -9,7 +9,6 @@ export default function ScanTab() {
   const [isScanning, setIsScanning] = useState(false);
   const [scannedData, setScannedData] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [cameraPermission, setCameraPermission] = useState<boolean | null>(null);
   const [selectedDeviceId, setSelectedDeviceId] = useState<string | null>(null);
   const [availableDevices, setAvailableDevices] = useState<MediaDeviceInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +81,6 @@ export default function ScanTab() {
       if (navigator.permissions && navigator.permissions.query) {
         try {
           const permission = await navigator.permissions.query({ name: 'camera' as PermissionName });
-          setCameraPermission(permission.state === 'granted');
 
           if (permission.state === 'denied') {
             setError('Camera permission denied. Please enable camera access in your browser settings.');
@@ -116,10 +114,11 @@ export default function ScanTab() {
       }
 
       // Start QR code scanning
-      await readerRef.current.decodeFromVideoDevice(
-        selectedDeviceId,
-        videoRef.current,
-        (result, error) => {
+      if (videoRef.current) {
+        await readerRef.current.decodeFromVideoDevice(
+          selectedDeviceId,
+          videoRef.current,
+          (result, error) => {
           if (result) {
             setScannedData(result.getText());
             stopCamera();
@@ -128,22 +127,23 @@ export default function ScanTab() {
             console.log('QR Code scan error:', error);
           }
         }
-      );
+        );
+      }
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Camera error:', err);
       let errorMessage = 'Failed to access camera. ';
       
-      if (err.name === 'NotAllowedError') {
+      if (err instanceof Error && err.name === 'NotAllowedError') {
         errorMessage += 'Camera permission denied. Please allow camera access and try again.';
-      } else if (err.name === 'NotFoundError') {
+      } else if (err instanceof Error && err.name === 'NotFoundError') {
         errorMessage += 'No camera found. Please connect a camera and try again.';
-      } else if (err.name === 'NotReadableError') {
+      } else if (err instanceof Error && err.name === 'NotReadableError') {
         errorMessage += 'Camera is already in use by another application.';
-      } else if (err.name === 'OverconstrainedError') {
+      } else if (err instanceof Error && err.name === 'OverconstrainedError') {
         errorMessage += 'Camera constraints cannot be satisfied.';
       } else {
-        errorMessage += err.message || 'Please check your browser permissions and try again.';
+        errorMessage += err instanceof Error ? err.message : 'Please check your browser permissions and try again.';
       }
       
       setError(errorMessage);
@@ -163,7 +163,7 @@ export default function ScanTab() {
     try {
       const result = await readerRef.current.decodeFromImageUrl(URL.createObjectURL(file));
       setScannedData(result.getText());
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('File scan error:', err);
       setError('No QR code found in the image. Please try a different image.');
     } finally {
@@ -401,7 +401,7 @@ export default function ScanTab() {
               {error.includes('HTTPS') && (
                 <div className="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-lg">
                   <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                    <strong>Note:</strong> Camera access requires HTTPS. If you're testing locally, try accessing the app via 
+                    <strong>Note:</strong> Camera access requires HTTPS. If you&apos;re testing locally, try accessing the app via 
                     <code className="bg-yellow-100 dark:bg-yellow-800 px-1 rounded">https://localhost:3000</code> or deploy to a hosting service.
                   </p>
                 </div>

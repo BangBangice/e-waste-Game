@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Smile, Zap, Star, Sword, Shield, Trophy, Recycle } from "lucide-react";
+import { motion } from "framer-motion";
+import { Heart, Smile, Sword, Shield, Trophy, Recycle } from "lucide-react";
 
 interface PetStats {
   life: number;
@@ -79,23 +79,6 @@ export default function PetTab() {
     setTimeout(() => setPetAnimation('idle'), 3000);
   };
 
-  const getPetMood = () => {
-    switch (petAnimation) {
-      case 'happy': return "😊";
-      case 'excited': return "🤩";
-      case 'sad': return "😢";
-      case 'sleeping': return "😴";
-      default: return "😐";
-    }
-  };
-
-  const getPetColor = () => {
-    const avgHappiness = (petStats.happiness + petStats.life) / 2;
-    if (avgHappiness >= 80) return "bg-green-400";
-    if (avgHappiness >= 60) return "bg-yellow-400";
-    if (avgHappiness >= 40) return "bg-orange-400";
-    return "bg-red-400";
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 via-purple-500 to-cyan-400 text-white -m-6 p-6">
