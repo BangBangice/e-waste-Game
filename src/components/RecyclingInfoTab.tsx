@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { Smartphone, Recycle, Battery, Cpu, HardDrive, Info } from "lucide-react";
+import { Smartphone, Recycle, Info, AlertTriangle, Leaf, Box } from "lucide-react";
 
 export interface RecyclingInfoData {
   productName: string;
@@ -62,9 +62,33 @@ export default function RecyclingInfoTab(props: { data?: RecyclingInfoData; scan
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold text-emerald-800 dark:text-emerald-200 mb-2">Recycling Info</h2>
-        <p className="text-emerald-600 dark:text-emerald-300">Product recyclability and safe disposal guidance</p>
+      {/* Hero / Header */}
+      <div className="rounded-2xl overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-500 p-6 text-white shadow-lg">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="flex items-center space-x-4">
+            <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center">
+              <Smartphone className="w-7 h-7" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold">{data.manufacturer} {data.productName} {data.model}</h2>
+              <p className="text-emerald-50">Recyclability and safe disposal guidance</p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <div className="w-20 h-20 rounded-full bg-white/10 grid place-items-center">
+                <div className="w-16 h-16 rounded-full bg-white grid place-items-center">
+                  <div className={`text-2xl font-extrabold ${scoreColor}`}>{data.recyclabilityScore}%</div>
+                </div>
+              </div>
+              <div className="absolute inset-0 rounded-full border-4 border-white/30" />
+            </div>
+            <div className="text-sm opacity-90">
+              <div className="font-semibold">Recyclability Score</div>
+              <div>Higher is better</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {props.scannedText && (
@@ -73,62 +97,60 @@ export default function RecyclingInfoTab(props: { data?: RecyclingInfoData; scan
         </div>
       )}
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center">
-              <Smartphone />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold dark:text-gray-100">{data.manufacturer} {data.productName} {data.model}</h3>
-              <div className="text-sm text-gray-600 dark:text-gray-300">Smartphone</div>
-            </div>
-          </div>
-          <div className="text-right">
-            <div className={`text-3xl font-bold ${scoreColor}`}>{data.recyclabilityScore}%</div>
-            <div className="text-xs text-gray-500">Recyclability score</div>
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Materials Card */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 border border-emerald-100 dark:border-gray-700">
+          <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center space-x-2"><Recycle size={18} className="text-emerald-600" /><span>Material Breakdown</span></h4>
+          <div className="space-y-4">
+            {data.materials.map((m, idx) => (
+              <div key={idx}>
+                <div className="flex items-center justify-between text-sm mb-1">
+                  <span className="text-gray-700 dark:text-gray-300">{m.name}</span>
+                  <span className={`px-2 py-0.5 rounded-full text-xs ${m.recyclable ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-700"}`}>{m.percentage}%</span>
+                </div>
+                <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2">
+                  <div className={`h-2 rounded-full ${m.recyclable ? "bg-emerald-500" : "bg-gray-400"}`} style={{ width: `${m.percentage}%` }} />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2"><Recycle size={16} /><span>Material Breakdown</span></h4>
-            <ul className="space-y-2">
-              {data.materials.map((m, idx) => (
-                <li key={idx} className="flex items-center justify-between text-sm">
-                  <span className="text-gray-700 dark:text-gray-300">{m.name}</span>
-                  <span className={`px-2 py-0.5 rounded-full text-xs ${m.recyclable ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-700"}`}>{m.percentage}%</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2"><Info size={16} /><span>Key Components</span></h4>
-            <ul className="space-y-2">
-              {data.components.map((c, idx) => (
-                <li key={idx} className="text-sm text-gray-700 dark:text-gray-300">
-                  <span className="font-medium mr-2">{c.name}</span>
-                  <span className={`mr-2 ${c.recyclable ? "text-green-600" : "text-gray-500"}`}>{c.recyclable ? "recyclable" : "not recyclable"}</span>
-                  {c.notes && <span className="text-gray-500">— {c.notes}</span>}
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Components Card */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 border border-emerald-100 dark:border-gray-700">
+          <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center space-x-2"><Info size={18} className="text-emerald-600" /><span>Key Components</span></h4>
+          <ul className="space-y-3">
+            {data.components.map((c, idx) => (
+              <li key={idx} className="flex items-start justify-between">
+                <div className="text-sm text-gray-700 dark:text-gray-300">
+                  <span className="font-medium">{c.name}</span>
+                  {c.notes && <span className="text-gray-500"> — {c.notes}</span>}
+                </div>
+                <span className={`text-xs px-2 py-0.5 rounded-full ml-3 whitespace-nowrap ${c.recyclable ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-700"}`}>{c.recyclable ? "Recyclable" : "Not recyclable"}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2">Recycling Guidance</h4>
-          <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300 text-sm">
+        {/* Guidance Card */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 border border-emerald-100 dark:border-gray-700">
+          <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center space-x-2"><Leaf size={18} className="text-emerald-600" /><span>Recycling Guidance</span></h4>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
             {data.guidance.map((g, i) => (
-              <li key={i}>{g}</li>
+              <li key={i} className="flex items-start space-x-2">
+                <span className="text-emerald-500 mt-1">•</span>
+                <span>{g}</span>
+              </li>
             ))}
           </ul>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2">Estimated Material Recovery</h4>
-          <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+
+        {/* Recovery Card */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 border border-emerald-100 dark:border-gray-700">
+          <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center space-x-2"><Box size={18} className="text-emerald-600" /><span>Estimated Material Recovery</span></h4>
+          <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
             {data.estimatedRecovery.map((r, i) => (
               <li key={i} className="flex items-center justify-between">
                 <span>{r.material}</span>
@@ -139,11 +161,14 @@ export default function RecyclingInfoTab(props: { data?: RecyclingInfoData; scan
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2">Disposal Warnings</h4>
-        <ul className="list-disc list-inside space-y-1 text-sm text-red-700 dark:text-red-300">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 border border-red-200 dark:border-red-800">
+        <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center space-x-2"><AlertTriangle size={18} className="text-red-500" /><span>Disposal Warnings</span></h4>
+        <ul className="space-y-2 text-sm text-red-700 dark:text-red-300">
           {data.disposalWarnings.map((w, i) => (
-            <li key={i}>{w}</li>
+            <li key={i} className="flex items-start space-x-2">
+              <span className="text-red-500 mt-1">•</span>
+              <span>{w}</span>
+            </li>
           ))}
         </ul>
       </div>
