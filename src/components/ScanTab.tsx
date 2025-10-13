@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Camera, Upload, QrCode, AlertCircle, X, RotateCcw } from "lucide-react";
 import { BrowserMultiFormatReader } from "@zxing/browser";
 
-export default function ScanTab() {
+export default function ScanTab({ onScanComplete }: { onScanComplete?: (text: string) => void }) {
   const [isScanning, setIsScanning] = useState(false);
   const [scannedData, setScannedData] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -120,7 +120,11 @@ export default function ScanTab() {
           videoRef.current,
           (result, error) => {
           if (result) {
-            setScannedData(result.getText());
+            const text = result.getText();
+            setScannedData(text);
+            if (onScanComplete) {
+              onScanComplete(text);
+            }
             stopCamera();
           }
           if (error && !error.message.includes('No MultiFormat Readers')) {

@@ -2,15 +2,17 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Camera, Heart, Gamepad2, BookOpen } from "lucide-react";
+import { Camera, Heart, Gamepad2, BookOpen, Info } from "lucide-react";
 import ScanTab from "@/components/ScanTab";
 import PetTab from "@/components/PetTab";
 import GamesTab from "@/components/GamesTab";
 import LearningTab from "@/components/LearningTab";
 import ThemeToggle from "@/components/ThemeToggle";
+import RecyclingInfoTab from "@/components/RecyclingInfoTab";
 
 const tabs = [
   { id: "scan", label: "Scan", icon: Camera },
+  { id: "info", label: "Info", icon: Info },
   { id: "pet", label: "My Pet", icon: Heart },
   { id: "games", label: "Games", icon: Gamepad2 },
   { id: "learning", label: "Learning", icon: BookOpen },
@@ -18,17 +20,25 @@ const tabs = [
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("scan");
+  const [lastScanText, setLastScanText] = useState<string | null>(null);
+
+  const handleScanComplete = (text: string) => {
+    setLastScanText(text);
+    setActiveTab("info");
+  };
 
   const renderTabContent = () => {
     switch (activeTab) {
       case "scan":
-        return <ScanTab />;
+        return <ScanTab onScanComplete={handleScanComplete} />;
       case "pet":
         return <PetTab />;
       case "games":
         return <GamesTab />;
       case "learning":
         return <LearningTab />;
+      case "info":
+        return <RecyclingInfoTab scannedText={lastScanText ?? undefined} />;
       default:
         return <ScanTab />;
     }
